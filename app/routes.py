@@ -2,30 +2,32 @@
 #  (c) 2019-2021 Nurul-GC                        *
 # ************************************************
 
-from app import app, render_template, request, make_response, jsonify
+from app import *
 from app.models import Autores, AutorSchema
 
+apigc = Blueprint('apigc', __name__)
 
-@app.route('/')
-@app.route('/index')
+
+@apigc.route('/')
+@apigc.route('/index')
 def index():
     return render_template("index.html")
 
 
-@app.route('/autores', methods=['GET'])
+@apigc.route('/autores', methods=['GET'])
 def autor():
     get_autores = Autores.query.all()
     autor_schema = AutorSchema(many=True)
-    autores, erro = autor_schema.dump(get_autores)
-    resposta = make_response(jsonify(autores=autores))
-    return resposta
+    autores = autor_schema.dump(get_autores)
+    return make_response(jsonify(autores=autores))
 
 
-@app.route('/autores', methods=['POST'])
+@apigc.route('/autores', methods=['POST'])
 def criar_autor():
     dados = request.get_json()
+    get_autor = Autores('Nurul', ('Python', 'PHP'))
+    get_autor.criar()
     autor_schema = AutorSchema()
-    autores, erro = autor_schema.load(dados)
-    resultado = autor_schema.dump(autores.criar()).data
-    resposta = make_response(jsonify(autores=autores))
-    return resposta
+    autores = autor_schema.load(get_autor)
+    resultado = autor_schema.dump(autores.criar())
+    return make_response(jsonify(autores=resultado))

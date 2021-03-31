@@ -5,7 +5,7 @@
 # ************************************************
 
 from app.config import Config
-from flask import Flask, render_template, make_response, request, jsonify
+from flask import Blueprint, Flask, render_template, make_response, request, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 # iniciando a instancia da aplicacao

@@ -1,6 +1,7 @@
 # ************************************************
 #  (c) 2019-2021 Nurul-GC                        *
 # ************************************************
+from typing import Tuple
 
 from app import db
 from marshmallow_sqlalchemy import ModelSchema
@@ -14,10 +15,9 @@ class Autores(db.Model):
 
     def criar(self):
         db.session.add(self)
-        db.session.comit()
         return self
 
-    def __init__(self, _nome, _especialidade):
+    def __init__(self, _nome: str, _especialidade: Tuple[str]):
         self.nome = _nome
         self.especialidade = _especialidade
 

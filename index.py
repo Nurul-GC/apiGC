@@ -13,6 +13,9 @@ e digitar no terminal:
 # ************************************************
 
 from app import app
+from app.routes import apigc
+
+app.register_blueprint(apigc)
 
 if __name__ == '__main__':
     app.run(debug=True)
